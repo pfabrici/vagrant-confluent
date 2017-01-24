@@ -49,8 +49,17 @@ Both users have an password equal to their username. You can su to the users by 
 
 Zookeeper
 ------------------
-The Zookeeper installation is done independlty from the Confluent stuff.
-Plain Apache Zookeeper tar.gz have been used for the installation.
+The Zookeeper installation is done independentlty from the Confluent stuff.
+As it is pretty standard Zookeeper is running on port 2181 here as well. Zookeepers
+data directory is in /tmp/zookeeper.
+Plain Apache Zookeeper tar.gz have been used for the installation. You can work
+with the zookeeper cli by :
+
+```
+su - zookeeper # use zookeeper password
+cd bin
+./zkCli.sh
+```
 
 
 Schema-Registry
