@@ -167,4 +167,7 @@ as user kafka for each node.
 A Cassandra sink Use-Case
 --------------------------
 
+[See here] (http://docs.datamountaineer.com/en/latest/cassandra-sink.html)
+
+
 `kafka-avro-console-producer --broker-list $BROKER_LIST --topic orders-topic --property value.schema='{"type":"record","name":"myrecord","fields":[{"name":"id","type":"int"},{"name":"created","type":"string"},{"name":"product","type":"string"},{"name":"price","type":"double"}]}'`
