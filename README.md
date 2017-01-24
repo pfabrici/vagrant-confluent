@@ -15,10 +15,16 @@ Prerequisites
 * Vagrant (tested on 1.8.1)
 * VirtualBox (tested on 5.1.10)
 
-
-Nodes
+Node Configuration
 ------------
-The nodes are members of a "Private Network". They have IPs 10.30.3.2 ... 10.30.3.4.
+The nodes are members of a "Private Network". They have IPs
+
+|Nodename | IP-Adress|
+|-------| ---------|
+|consumer1|10.30.3.2|
+|consumer2|10.30.3.3|
+|consumer3|10.30.3.4|
+
 Each node can see the others but the host can not access the boxes. As the
 netmask is 255.255.0.0 the cluster nodes can access other Vagrant boxes with
 private network and IPs like 10.30.x.y
