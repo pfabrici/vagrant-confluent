@@ -121,20 +121,50 @@ hardcoded in there.
 
 Schema-Registry
 ----------------
-Confluents schema-registry is part of the kafka installation. In this setup you can find it
-under /opt/kafka. As kafka is installed under its own user kafka you have to Switchto it from the vagrant
-user before starting or stopping the service :
-`su - kafka`
-Same here - kafka's password is kafka. Change directory to bin before starting services :
-`
+
+The schema-registry is not started by default. You have to do that on each
+node of the cluster by
+
+```
 cd /opt/kafka/bin
 schema-registry-start -daemon ../etc/schema-registry/schema-registry.properties
-connect-distributed -daemon ../etc/schema-registry/connect-avro-distributed.properties`
+```
+Currently the logfiles of the schema-registry go to /tmp/schema-registry. To verify
+if the service runs please use `ps -ef | grep schema` or equivalent. Check the logfiles
+for warnings or errors.
+
+The schema-registry depends on the zookeeper service. If zookeeper is not available
+schema-registry does not recover and has to be restarted manually.
+
+To stop schema-registry simply run
+
+```
+cd /opt/kafka/bin
+schema-registry-stop
+```
+on the node you want schema-registry to stop.
 
 
-Kafka Connect starten
----------------------
+kafka-connect
+-------------
+Kafka Connect is included in the Confluent.io Open Source package. As we want to
+check out the Cassandra sink capabilities later on some parts of Datamountaineers
+Stream Reactor software is installed during provisioning.
+Part of the Stream Reactor software is a CLI for kafka connect, that enables the
+operator to simply maintain sinks and sources.
+
+To start the kafka-connect server run
+
+```
+cd /opt/kafka/bin
 connect-distributed -daemon ../etc/schema-registry/connect-avro-distributed.properties
+tail -f ../log/connectDistributed.out
+```
 
+as user kafka for each node.
+
+
+A Cassandra sink Use-Case
+--------------------------
 
 `kafka-avro-console-producer --broker-list $BROKER_LIST --topic orders-topic --property value.schema='{"type":"record","name":"myrecord","fields":[{"name":"id","type":"int"},{"name":"created","type":"string"},{"name":"product","type":"string"},{"name":"price","type":"double"}]}'`
