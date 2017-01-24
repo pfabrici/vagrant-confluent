@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+java_base_dir=/opt/kafka/share/java
+
+# confluent-common: required by kafka-serde-tools
+# kafka-serde-tools (e.g. Avro serializer): bundled with confluent-schema-registry package
+for library in "confluent-common" "kafka-connect"; do
+  dir="$java_base_dir/$library"
+  if [ -d "$dir" ]; then
+    classpath_prefix="$CLASSPATH:"
+    if [ "x$CLASSPATH" = "x" ]; then
+      classpath_prefix=""
+    fi
+    CLASSPATH="$classpath_prefix$dir/*"
+  fi
+done
+
+
+
+java -jar ${java_base_dir}/confluent-common/kafka-connect-cli-0.9-all.jar $@
+
