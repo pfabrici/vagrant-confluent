@@ -8,7 +8,8 @@ This is a Vagrant project to set up a 3-node Confluent Kafka cluster with
 * Datamountaineers Kafka Connect
 * Cassandra Sink
 
-This configuration will start and provision three CentOS7/64-Bit VMs. All of the three nodes host a zookeeper a kafka node.
+This configuration will start and provision three CentOS7/64-Bit VMs each of them
+containing a zookeeper, kafka-server, schema-registry and kafka connect server.
 
 Prerequisites
 -------------------------
@@ -17,7 +18,9 @@ Prerequisites
 
 Node Configuration
 ------------
-The nodes are members of a "Private Network". They have IPs
+All three nodes base on a core Centos 7. They are configured to get 2GB RAM so
+you will need >= 6GB RAM for the cluster. The nodes are members of a "Private Network".
+These IPs are assigned to node names :
 
 |Nodename | IP-Adress|
 |-------| ---------|
@@ -29,12 +32,26 @@ Each node can see the others but the host can not access the boxes. As the
 netmask is 255.255.0.0 the cluster nodes can access other Vagrant boxes with
 private network and IPs like 10.30.x.y
 
+IPV6 is turned off to avoid any impacts.
+
+Only a few CentOS packages will be installed during provisioning :
+* wget to simplify download of additional software
+* net-tools ( for /sbin/ifconfig )
+* nc
+* ntp ( to have same date on each node )
+
+Two operating system users have been prepared :
+* zookeeper with homedir /opt/zookeeper
+* kafka with homedir /opt/kafka
+
+Both users have an password equal to their username. You can su to the users by typing
+`su - zookeeper ` from the vagrant users shell.
+
 Zookeeper
 ------------------
-Zookeeper is installed in /opt/zookeeper. It is run by its own zookeeper user.
-Switch to zookeeper from the vagrant user by typing :
-`su - zookeeper`
-Provide the password `zookeeper`. Zookeeper will be started during provisioning.
+The Zookeeper installation is done independlty from the Confluent stuff.
+Plain Apache Zookeeper tar.gz have been used for the installation.
+
 
 Schema-Registry
 ----------------

@@ -21,8 +21,18 @@ while true ; do
   # install missing system packages
   #
   echo "Installing system packages"
-  yum -y install wget nc net-tools
+  yum -y install wget nc net-tools ntp
   [ $? -ne 0 ] && { ECODE=12; break; }
+
+  # Configure the ntp connection
+  #
+  echo "server 0.de.pool.ntp.org" > /etc/ntp/step-tickers
+  echo "server 1.de.pool.ntp.org" >> /etc/ntp/step-tickers
+  echo "server 2.de.pool.ntp.org" >> /etc/ntp/step-tickers
+  echo "server 3.de.pool.ntp.org" >> /etc/ntp/step-tickers
+
+  systemctl enable ntpd
+  systemctl start ntpd
 
   # assign setup scripts the execute rights
   #
