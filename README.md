@@ -49,9 +49,10 @@ Both users have an password equal to their username. You can su to the users by 
 
 Zookeeper
 ------------------
-The Zookeeper installation is done independentlty from the Confluent stuff.
-As it is pretty standard Zookeeper is running on port 2181 here as well. Zookeepers
-data directory is in /tmp/zookeeper.
+The Zookeeper installation is done independently from the Confluent stuff.
+As it is pretty standard, Zookeeper is running on port 2181 here as well. Zookeepers
+data directory is in /tmp/zookeeper. Zookeeper is configured to run in cluster mode,
+all three nodes of this vagrant cluster are part of it.
 Plain Apache Zookeeper tar.gz have been used for the installation. You can work
 with the zookeeper cli by :
 
@@ -61,6 +62,22 @@ cd bin
 ./zkCli.sh
 ```
 
+Zookeeper is started during the provision phase of this vagrant cluster by simply
+calling the command line. To stop the zookeeper process you have to find out the
+process id first, e.g. by typing
+
+```
+su - zookeeper
+cd bin
+./zkServer stop
+```
+
+To start zookeeper again use 'start' as a parameter to zkServer.sh .
+
+
+
+kafka-server
+-------------
 
 Schema-Registry
 ----------------
