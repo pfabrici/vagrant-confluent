@@ -11,6 +11,12 @@ This is a Vagrant project to set up a 3-node Confluent Kafka cluster with
 This configuration will start and provision three CentOS7/64-Bit VMs each of them
 containing a zookeeper, kafka-server, schema-registry and kafka connect server.
 
+Purpose
+------------
+A kafka installation without source and sink does not make so much sense. This
+vagrant setup is meant to be part of a larger environment. It is prepared to
+connect to a Apache Cassandra cluster on the sink-side.
+
 Prerequisites
 -------------------------
 * Vagrant (tested on 1.8.1)
@@ -49,6 +55,9 @@ Both users have an password equal to their username. You can su to the users by 
 
 Zookeeper
 ------------------
+Zookeeper is more-or-less the configuration memory for the kafka,schema-registry and kafka-connect
+cluster described in this README.
+
 The Zookeeper installation is done independently from the Confluent stuff.
 As it is pretty standard, Zookeeper is running on port 2181 here as well. Zookeepers
 data directory is in /tmp/zookeeper. Zookeeper is configured to run in cluster mode,
