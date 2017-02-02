@@ -4,6 +4,7 @@
 Vagrant.configure("2") do |config|
 
   config.vm.box = 'centos/7'
+  #config.vm.synced_folder ".", "/vagrant",type="nfs"
   config.vm.synced_folder ".", "/vagrant"
 
   config.ssh.forward_agent = true # So that boxes don't have to setup key-less ssh
